@@ -15,6 +15,15 @@ import java.util.List;
 public class Grafo{
     private List<Aresta> aresta;
     private List<Vertice> vertice;
+    private int nro_grupos;
+
+    public int getNro_grupos() {
+        return nro_grupos;
+    }
+
+    public void setNro_grupos(int nro_grupos) {
+        this.nro_grupos = nro_grupos;
+    }
 
     public List<Aresta> getAresta() {
         return aresta;
@@ -83,9 +92,8 @@ public class Grafo{
     }
     
     public List<Aresta> pontes(Grafo g){
-        for(Vertice v : g.getVertice()){
-            Algoritmos.isPonte(0, v);
-        }
+        g.limpaGrafo(g);
+        Algoritmos.isPonte(0, g.getVertice().get(0));
         return Algoritmos.pontes;
     }
     
@@ -105,18 +113,35 @@ public class Grafo{
         return pontosDeArticulacao;
     }
     
-    public List<Vertice> TopologicalSort(Grafo g){
+    public List<Vertice> TopologicalSort(){
         List<Vertice> vertices = new ArrayList();
 
-        for(Vertice v : g.getVertice()){
-            limpaGrafo(g);
-//            Algoritmos.DfsVisit(v, 0, vertices);
+        for(Vertice v : this.getVertice()){
+            limpaGrafo(this);
+            Algoritmos.DfsVisit(v, 0, vertices);
         }
         List<Vertice> vertices1 = new ArrayList();
         for(int i = vertices.size()-1; i >= 0; i--){
             vertices1.add(vertices.get(i));
         }
         return vertices1;
+    }
+    
+    public boolean hasCicles(){        
+        limpaGrafo(this);
+        List<Vertice> vertices = this.getVertice();
+        int vertices_length = vertices.size();
+        for(int i = 0; i < vertices_length; i++){
+            Vertice v = vertices.get(i);
+            if (v.getCor() == Cor.Preto){
+                continue;
+            }
+            v.setCor(Cor.Cinza);
+            if (Algoritmos.hasCiclesAvailables(v) == true){
+                return true;
+            }
+        } 
+        return false;
     }
     
     public List<Vertice> StronglyConnectedComponents(Grafo g){
@@ -131,6 +156,7 @@ public class Grafo{
             for(Vertice v : vertices){
                 Algoritmos.DfsVisit(v, 0, vertices);
             }
+            System.out.println(vertices);
             return null;
         }catch(Exception e){
             System.out.println("Erro: "+e.toString());

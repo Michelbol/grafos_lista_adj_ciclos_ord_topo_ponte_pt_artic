@@ -26,16 +26,38 @@ public class TrabalhoPalavras {
         Grafo grafo;
         try{
             //=======================================Exemplo 1============================================================================//
-            /**/grafo = lerGrafo(new File(".").getCanonicalPath()+"\\src\\TrabalhoPalavras\\grafo_pontes.txt", true);                            /**/                                                                                             /**/
-//            /**/System.out.println("Nro Vertices: "+ grafo.getVertice().size());                                                        /**/
-//            /**/System.out.println("Nro Arestas: "+ grafo.getAresta().size()); 
-            /**/
-                grafo.StronglyConnectedComponents(grafo);
-//                System.out.println(grafo.getVertice());
-//            /**/System.out.println(grafo.pontosDeArticulacao(grafo));
-//            /**/System.out.println(grafo.pontes(grafo));
-//                Algoritmos.dfsPontesNaoDirecionado(grafo);
-            //=======================================Exemplo 1============================================================================//
+            /**/grafo = lerGrafo(new File(".").getCanonicalPath()+"\\src\\TrabalhoPalavras\\grafo_pontes.txt", false/*Orientado == false*/);/**/
+            /**/System.out.println("Nro Vertices: "+ grafo.getVertice().size());                                                        /**/
+            /**/System.out.println("Nro Arestas: "+ grafo.getAresta().size()); 
+            /**/grafo.imprimeListaAdjacencia();
+            /**/System.out.println("Pontes: " + grafo.pontes(grafo).toString());
+            /**/if(!grafo.hasCicles()){
+            /**/    System.out.println("Ordenação topológica: "+grafo.TopologicalSort());
+            /**/}
+            /**/System.out.println("Pontos de Articulação: " + grafo.pontosDeArticulacao(grafo));
+            /**/System.out.println("====================================================================================================");
+            //=======================================Exemplo 2============================================================================//
+            /**/grafo = lerGrafo(new File(".").getCanonicalPath()+"\\src\\TrabalhoPalavras\\grafo_aciclico.txt", true);
+            /**/System.out.println("Nro Vertices: "+ grafo.getVertice().size());                                                        /**/
+            /**/System.out.println("Nro Arestas: "+ grafo.getAresta().size()); 
+            /**/grafo.imprimeListaAdjacencia();
+            /**/System.out.println("Pontes: " + grafo.pontes(grafo));
+            /**/if(!grafo.hasCicles()){
+            /**/    System.out.println("Ordenação topológica: "+grafo.TopologicalSort());
+            /**/}
+            /**/System.out.println("Pontos de Articulação: " + grafo.pontosDeArticulacao(grafo));
+            /**/System.out.println("====================================================================================================");
+            //=======================================Exemplo 3============================================================================//
+            /**/grafo = lerGrafo(new File(".").getCanonicalPath()+"\\src\\TrabalhoPalavras\\grafo_pontos_articulacoes.txt", true);
+            /**/System.out.println("Nro Vertices: "+ grafo.getVertice().size());                                                        /**/
+            /**/System.out.println("Nro Arestas: "+ grafo.getAresta().size()); 
+            /**/grafo.imprimeListaAdjacencia();
+            /**/System.out.println("Pontes: " + grafo.pontes(grafo));
+            /**/if(!grafo.hasCicles()){
+            /**/    System.out.println("Ordenação topológica: "+grafo.TopologicalSort());
+            /**/}
+            /**/System.out.println("Pontos de Articulação: " + grafo.pontosDeArticulacao(grafo));
+            //===========================================================================================================================//
         }catch(Exception e){
             System.out.println("Exception: "+ e);
         } 
@@ -52,8 +74,6 @@ public class TrabalhoPalavras {
             String linha_split[]    = linha.split(" ");
             int nro_vertices        = Integer.parseInt(linha_split[0]);
             int nro_arestas         = Integer.parseInt(linha_split[1]);
-            System.out.println("Arestas: "+nro_arestas);
-            System.out.println("Vertices: "+nro_vertices);
             for(int i = 0; i < nro_arestas; i++){
                 linha = lerArq.readLine();
                 linha_split = linha.split(" ");

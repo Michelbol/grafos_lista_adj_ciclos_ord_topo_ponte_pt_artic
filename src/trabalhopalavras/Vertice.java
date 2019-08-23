@@ -26,8 +26,8 @@ public class Vertice implements Comparator<Vertice>{
     private int distancia;
     private boolean isPontoArticulacao;
     private List<Aresta> arestas;
-    
-   
+
+
     public int compare(Vertice a1, Vertice a2){
             return a1.getFinalTmpDesc() - a2.getFinalTmpDesc();
     }
@@ -147,7 +147,7 @@ public class Vertice implements Comparator<Vertice>{
 
     @Override
     public String toString() {
-        return "Vertice{" + "nome=" + nome + " Tempo de Término: "+ finalTmpDesc + '}';
+        return "Vertice{" + "nome=" + nome +'}';
     }
     public void addAdjacente(Vertice v){
         List adjacente = this.getAdjacentes();

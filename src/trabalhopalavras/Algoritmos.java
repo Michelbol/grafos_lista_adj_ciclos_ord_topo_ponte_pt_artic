@@ -195,7 +195,9 @@ public class Algoritmos {
                 v.setLow(Integer.min(v.getLow(), verticeAdjacente.getLow()));
                 if(verticeAdjacente.getLow() > v.getInitTmpDesc()){
                     Aresta a = new Aresta(verticeAdjacente, v);
-                    pontes.add(a);
+                    if(!pontes.contains(a)){
+                        pontes.add(a);
+                    }
                 }else{
                     if((verticeAdjacente != v.getPredecessor()) && (verticeAdjacente.getInitTmpDesc() < v.getInitTmpDesc())){
                        v.setLow(Integer.min(v.getLow(), verticeAdjacente.getInitTmpDesc()));
@@ -206,5 +208,25 @@ public class Algoritmos {
         v.setCor(Cor.Preto);
         tempo += 1;
         v.setFinalTmpDesc(tempo);
+    }
+    
+    public static boolean hasCiclesAvailables(Vertice v){
+        List<Vertice> adjacentes = v.getAdjacentes();
+        int length_adj = adjacentes.size();
+        for (int count = 0; count < length_adj; count++) {
+            Vertice u = adjacentes.get(count);
+            if (u.getCor() == Cor.Preto){
+              continue;
+            }
+            if (u.getCor() == Cor.Cinza) {
+                return true;
+            }
+           u.setCor(Cor.Cinza);
+           if (hasCiclesAvailables(u) == true){
+                return true;
+           }
+        }
+        v.setCor(Cor.Preto);
+        return false;
     }
 }
